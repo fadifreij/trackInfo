@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+@model SearchEngine.Models.EngineViewModel;
+
+<h1>Engine provider</h1>
+
+<div >
+   
+        @using (Html.BeginForm("AddNewEngine", "Home", FormMethod.Post))
+        {
+            <div class="row">
+        <div class="col-md-2"> <b>Engine Name</b></div><div class="col-md-2"><input type="text" name="Engine.EngineName" class="form-control" value="" /></div>
+        <div class="col-md-2"> <b>Engine Url</b></div><div class="col-md-2"><input type="text" name="Engine.EngineUrl" class="form-control" value="" /></div>
+        <div class="col-md-2"> <input type="submit" class="btn btn-success" value="Add new Engine" /> </div>
+            </div>
+        }
+   
+</div>
+<div>
+    @if (Model.EngineList != null && Model.EngineList.Count() > 0)
+    {
+        <table class="table">
+            <thead><tr><td>Engine Name</td><td>Engine Url</td><td>Active</td><td></td></tr></thead>
+        <tbody>
+            @foreach(var engine in Model.EngineList){
+            <tr>
+                <td>@engine.EngineName</td>
+                <td>@engine.EngineUrl</td>
+                        <td>@if (engine.IsActive)
+                            {
+                                <img src="~/success.png" style="width:20px"/>
+                            }
+                        </td>
+
+                        @using (Html.BeginForm("ChangeEngineActive", "Home", FormMethod.Post))
+                            {
+                              <td>  <input type="submit" class="btn btn-danger" value="Set active"/><input type="hidden" name="Engine.Id" value="@engine.Id"/></td>
+                            }
+                    </tr>
+            }
+            </tbody>
+
+    </table>
+    }
+    
+</div>

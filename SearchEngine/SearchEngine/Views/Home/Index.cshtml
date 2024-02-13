@@ -1,0 +1,36 @@
+﻿@model SearchEngine.Models.SearchViewModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using (Html.BeginForm("Submit", "Home", FormMethod.Post)){
+
+<div class="container">
+  <div class="row" >
+        <div class="col-md-2"><b>Url :</b></div>
+            <div class="col-md-3"><input type="text" name="Url" value="@Model.Url" class="form-control" /> </div>
+
+        <div class="col-md-2"><b>keywords :</b></div>
+            <div class="col-md-3"><input type="text" name="Keywords" value="@Model.Keywords" class="form-control" /> </div>
+
+        <div class="col-md-2"><input type="submit" value="Search" class="btn btn-primary" /></div>
+  </div>
+  <hr />
+  <div>
+            @if(Model.searchInfoList != null && Model.searchInfoList.Count() > 0)
+            {
+                <table class="table">
+                    <thead>
+                       <tr><td>Engine</td><td>Keywords</td><td>Occurance</td><td>Rank</td><td>Date of search</td></tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var rec in Model.searchInfoList){
+                            <tr><td>@rec.Engine.EngineUrl</td><td>@rec.Keywords</td><td>@rec.Occurance</td><td>@rec.Rank</td><td>@rec.SearchDate.ToString("MM/dd/yyyy hh:mm tt")</td></tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+</div>
+}
